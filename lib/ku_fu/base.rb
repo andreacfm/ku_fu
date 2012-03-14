@@ -18,14 +18,19 @@ module KuFu
 
     def ku_fu_register
       if new_record?
-        write_attribute(:creator_id, User.current.id) if self.respond_to?(:creator_id)
+        write_attribute(:creator_id, ku_fu_user_id) if self.respond_to?(:creator_id)
       else
-        write_attribute(:updater_id, User.current.id) if self.respond_to?(:updater_id)
+        write_attribute(:updater_id, ku_fu_user_id) if self.respond_to?(:updater_id)
       end
     end
 
     def ku_fu_register_deleter
-        write_attribute(:deleter_id, User.current.id) if self.respond_to?(:deleter_id)
+        write_attribute(:deleter_id, ku_fu_user_id) if self.respond_to?(:deleter_id)
+    end
+
+    private
+    def ku_fu_user_id
+      User.respond_to?(:current) && !User.current.nil? ? User.current.id : nil
     end
 
   end
