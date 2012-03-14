@@ -8,7 +8,7 @@ describe "ku_fu" do
 
   context "given a class that register_ku_fu" do
 
-    before  do
+    before do
       @subject = Document
     end
 
@@ -35,6 +35,18 @@ describe "ku_fu" do
 
     end
 
-  end
+    context "on destroy" do
 
+      it "should save the User.current id as deleter_id" do
+        model = @subject.create!
+        new_user = User.create!
+        User.current = new_user
+        model.send(:run_callbacks, :destroy)
+        model.deleter_id.should eq User.current.id
+        model.creator_id.should_not eq model.deleter_id
+        model.updater_id.should be_nil
+      end
+
+    end
+  end
 end

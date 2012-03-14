@@ -22,6 +22,7 @@ RSpec.configure do |config|
       t.string :title
       t.integer :creator_id
       t.integer :updater_id
+      t.integer :deleter_id
       t.timestamps
     end
     User.current = User.create!
