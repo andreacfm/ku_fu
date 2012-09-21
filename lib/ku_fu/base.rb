@@ -3,7 +3,6 @@ module KuFu
   def self.included base
     base.class_eval do
       extend ClassMethods
-      include InstanceMethods
     end
   end
 
@@ -11,6 +10,7 @@ module KuFu
     def register_ku_fu
       before_save :ku_fu_register
       before_destroy :ku_fu_register_deleter
+      include InstanceMethods
     end
   end
 
